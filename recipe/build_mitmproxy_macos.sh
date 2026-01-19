@@ -10,11 +10,14 @@ lipo -create -output target/release/macos-certificate-truster \
   cd mitmproxy-macos/redirector && \
   mkdir build && mkdir dist && \
   # 1. Create an unsigned .xcarchive
+  # LLVM_LTO=NO is required to work around conda-forge ld64 956.6+ issue:
+  # "ld: -lto_library library filename must be 'libLTO.dylib'"
   xcodebuild \
     -scheme macos-redirector \
     -archivePath build/macos-redirector.xcarchive \
     CODE_SIGNING_ALLOWED=NO \
     CODE_SIGN_IDENTITY="" \
+    LLVM_LTO=NO \
     archive && \
   # 2. Copy the .app out of the .xcarchive (the .xcarchive is just a folder)
   cp -R \
