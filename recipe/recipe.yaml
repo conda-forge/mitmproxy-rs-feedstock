@@ -144,6 +144,10 @@ outputs:
         - if: build_platform != target_platform
           then:
             - maturin >=1.10.1,<2
+        - if: build_platform != host_platform
+          then:
+            - python
+            - cross-python_${{ host_platform }}
         - cargo-bundle-licenses
       host:
         - python
