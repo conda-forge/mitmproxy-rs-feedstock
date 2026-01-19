@@ -65,10 +65,10 @@ outputs:
         file: build_mitmproxy_macos
     requirements:
       build:
-        - if: build_platform != target_platform
+        - if: build_platform != host_platform
           then:
             - python
-            - cross-python_${{ target_platform }}
+            - cross-python_${{ host_platform }}
         - ${{ stdlib('c') }}
         - ${{ compiler('rust') }}
         - if: build_platform != target_platform
