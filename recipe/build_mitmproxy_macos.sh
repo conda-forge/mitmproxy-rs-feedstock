@@ -6,10 +6,13 @@ lipo -create -output target/release/macos-certificate-truster \
     "target/$CARGO_BUILD_TARGET/release/macos-certificate-truster"
 
 (
-  export LD="${CC_FOR_BUILD}" && \
   cd mitmproxy-macos/redirector && \
   mkdir build && mkdir dist && \
   # 1. Create an unsigned .xcarchive
+  # Unset conda-forge compiler env vars so xcodebuild uses system Xcode toolchain.
+  # The conda-forge ld64 956.6+ has an LTO library incompatibility with xcodebuild:
+  # "ld: -lto_library library filename must be 'libLTO.dylib'"
+  unset CC CXX OBJC OBJCXX LD LDFLAGS CFLAGS CXXFLAGS CPPFLAGS
   # The xcode scheme has a post-action that tries to copy to /Applications,
   # which fails on CI. We ignore the exit code and verify the archive exists.
   xcodebuild \
