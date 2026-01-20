@@ -30,6 +30,10 @@ outputs:
         - cargo-bundle-licenses --format yaml --output ./THIRDPARTY.yml
     requirements:
       build:
+        - if: build_platform != host_platform
+          then:
+            - python
+            - cross-python_${{ host_platform }}
         - ${{ compiler('c') }}
         - ${{ stdlib('c') }}
         - ${{ compiler('rust') }}
@@ -61,6 +65,10 @@ outputs:
         file: build_mitmproxy_macos
     requirements:
       build:
+        - if: build_platform != host_platform
+          then:
+            - python
+            - cross-python_${{ host_platform }}
         - ${{ stdlib('c') }}
         - ${{ compiler('rust') }}
         - if: build_platform != target_platform
@@ -136,6 +144,10 @@ outputs:
         - if: build_platform != target_platform
           then:
             - maturin >=1.10.1,<2
+        - if: build_platform != host_platform
+          then:
+            - python
+            - cross-python_${{ host_platform }}
         - cargo-bundle-licenses
       host:
         - python
