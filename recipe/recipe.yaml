@@ -42,7 +42,9 @@ outputs:
           then:
             - maturin >=1.10.1,<2
         - cargo-bundle-licenses
-        - bpf-linker
+        # Pin to 0.9.15 to match upstream:
+        # https://github.com/mitmproxy/mitmproxy_rs/blob/7e7cc99f8b1d71edad1558ab090e95ebd174fec9/.github/actions/setup/action.yml
+        - bpf-linker ==0.9.15
       host:
         - python
         - hatchling
