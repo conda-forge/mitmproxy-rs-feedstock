@@ -22,6 +22,8 @@ outputs:
       script:
         - mkdir -p ./custom-build-tools
         - cp "${RECIPE_DIR}/cargo" ./custom-build-tools/cargo
+        - cp "${RECIPE_DIR}/rustup" ./custom-build-tools/rustup
+        - chmod +x ./custom-build-tools/rustup
         - export PATH="$(pwd)/custom-build-tools:${PATH}"
         - export CARGO_BUILD_RUSTFLAGS=""
         - export LDFLAGS=""
