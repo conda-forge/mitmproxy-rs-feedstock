@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Fake rustup wrapper for conda-forge builds.
+# aya_build uses "rustup run nightly cargo ..." to compile eBPF code.
+# In conda-forge, we don't use rustup - Rust is installed directly.
+# This wrapper intercepts "rustup run <toolchain> <command>" and just
+# runs the command directly using the conda-forge Rust toolchain.
+
+if [[ "${1:-}" == "run" ]]; then
+    shift  # consume "run"
+    shift  # consume toolchain name (e.g., "nightly")
+    exec "$@"
+else
+    echo "rustup wrapper: unsupported command: $*" >&2
+    exit 1
+fi

@@ -1,5 +1,5 @@
 context:
-  version: "0.12.8"
+  version: "0.12.9"
 
 recipe:
   name: mitmproxy-rs
@@ -7,7 +7,7 @@ recipe:
 
 source:
   - url: https://github.com/mitmproxy/mitmproxy_rs/archive/refs/tags/v${{ version }}.tar.gz
-    sha256: 59550c3f4352f64c50d46de976788db8ea15710fac8ce2af39755304e9676d0e
+    sha256: fc20e6f576ab6e5726754555dc96f7753e3580de233f4f911cfbf224bf6dd790
 
 build:
   number: 0
@@ -22,6 +22,8 @@ outputs:
       script:
         - mkdir -p ./custom-build-tools
         - cp "${RECIPE_DIR}/cargo" ./custom-build-tools/cargo
+        - cp "${RECIPE_DIR}/rustup" ./custom-build-tools/rustup
+        - chmod +x ./custom-build-tools/rustup
         - export PATH="$(pwd)/custom-build-tools:${PATH}"
         - export CARGO_BUILD_RUSTFLAGS=""
         - export LDFLAGS=""
@@ -42,7 +44,9 @@ outputs:
           then:
             - maturin >=1.10.1,<2
         - cargo-bundle-licenses
-        - bpf-linker
+        # Pin to 0.9.15 to match upstream:
+        # https://github.com/mitmproxy/mitmproxy_rs/blob/7e7cc99f8b1d71edad1558ab090e95ebd174fec9/.github/actions/setup/action.yml
+        - bpf-linker ==0.9.15
       host:
         - python
         - hatchling
