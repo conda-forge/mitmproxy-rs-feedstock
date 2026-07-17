@@ -1,5 +1,5 @@
 context:
-  version: "0.12.9"
+  version: "0.12.10"
 
 recipe:
   name: mitmproxy-rs
@@ -7,7 +7,7 @@ recipe:
 
 source:
   - url: https://github.com/mitmproxy/mitmproxy_rs/archive/refs/tags/v${{ version }}.tar.gz
-    sha256: fc20e6f576ab6e5726754555dc96f7753e3580de233f4f911cfbf224bf6dd790
+    sha256: c351bfee29fbb2bf23ffd2d316f1fbc28d20ed8ca99769ac321dae4d834b17d5
 
 build:
   number: 0
