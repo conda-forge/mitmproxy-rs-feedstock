@@ -3,6 +3,8 @@
 # is_freethreading and is_abi3 keys here, since that migration extends the zip;
 migrator_ts: 1755739490
 __migrator:
+    # Keep rust_dev in the Python 3.15 channels for the Linux eBPF build.
+    use_local: "true"
     commit_message: Rebuild for python 3.15
     migration_number: 1
     operation: key_add
@@ -42,4 +44,4 @@ python:
 is_python_min:
 - false
 channel_sources:
-- conda-forge,conda-forge/label/python_rc
+- conda-forge/label/rust_dev,conda-forge,conda-forge/label/python_rc
