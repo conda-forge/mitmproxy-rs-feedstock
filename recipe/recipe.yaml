@@ -8,6 +8,8 @@ recipe:
 source:
   - url: https://github.com/mitmproxy/mitmproxy_rs/archive/refs/tags/v${{ version }}.tar.gz
     sha256: bafce53ae27a370a78e9bf19a33df8c691ac75d2a12003391d0709e3261b4134
+    patches:
+      - skip-mitmproxy-windows-arm64.patch
 
 build:
   number: 1
@@ -101,6 +103,8 @@ outputs:
     build:
       skip:
         - not win
+        # WinDivert (windivert-sys) supports x86/x64 only.
+        - target_platform == "win-arm64"
         - match(python, "<3.12")
       script:
         # Upstream's pyproject.toml expects target/release/windows-redirector.exe.
@@ -162,7 +166,7 @@ outputs:
         - maturin >=1.10.1,<2
       run:
         - python
-        - if: win
+        - if: win and target_platform != "win-arm64"
           then:
             - ${{ pin_subpackage('mitmproxy-windows', exact=True) }}
         - if: linux
