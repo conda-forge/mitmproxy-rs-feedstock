@@ -9,7 +9,7 @@ Package license: MIT
 
 Summary: This package contains mitmproxy's Rust bits.
 
-Development: https://github.com/mitmproxy/mitmproxy-rs
+Development: https://github.com/mitmproxy/mitmproxy_rs
 
 # mitmproxy_rs
 
